@@ -1,0 +1,22 @@
+1. How long did this take (estimate)?
+-> This took about 8 hours 
+
+2. What were the enjoyable aspects of the lab?
+-> I liked how I kind of got used to creating and working with branches.
+-> I also liked getting to see how the two different approaches for linking 
+views were implemented. 
+
+3. What were the challenging parts of this lab?
+-> Putting some functions in the correct location without breaking the code. 
+-> Understanding what some parts of the code were doing + understanding what some of the code 
+we were implementing actually did.
+-> I also ran into an issue when switching between branches e.g. when I switched to shape-generators,
+I realized that I needed to retrieve the code in barchart.js and main.js from the linked-interactions
+branch. Before I saw this, my scatterplot and barchart were not getting rendered because some of the 
+necessary code wasn't in the shape-generators branch. 
+
+4. What resources did you use? Include links to websites below.
+-> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach 
+-> I also used Claude to help me understand a bunch of errors I had and didn't know what they meant 
+or how to solve them. I also used it to help me make sense of some elements of code we were asked to 
+implement. 
