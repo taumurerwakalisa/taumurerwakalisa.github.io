@@ -184,7 +184,7 @@ h3, .subtitle {
 	color: var(--text-primary);
 	letter-spacing: 0.05em;
 	margin-right: 6px;
-	font-size: 35px;
+	font-size: 2rem;    /*35px;*/
 }
 
 #legend-genres {
@@ -210,7 +210,7 @@ h3, .subtitle {
 }
 
 .legend-label {
-	font-size: 1rem;       /*0.95rem;*/
+	font-size: 2rem;     /*0.95rem;*/
 	color: var(--text-primary);
 	font-family: 'Rajdhani', sans-serif;
 } 
