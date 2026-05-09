@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Video Game Sales Treemap</title>
+
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,300,400italic,700" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="container">
+
+		<!-- Genre selector (initial view) -->
+		<div id="genre-selector">
+			<h1>VIDEO GAME SALES BY GENRE AND REGION</h1>
+                <h3 class="subtitle">Presented by Asuna Dai and Umurerwa Kalisa Tania</h3>
+			<h1>Pick genres that you are interested in.</h1>
+			<p class="instructions">
+				Single-click a genre to select it (click it again to deselect). You can pick more than one. When you're ready, double-click any genre to open the treemap. With nothing selected, all genres are shown.
+			</p>
+			<div id="genre-buttons"></div>
+		</div>
+
+		<!-- Treemap view (revealed by double-click on a genre) -->
+		<div id="treemap-view" style="display:none;">
+			<button type="button" id="back-btn">&larr; Go back</button>
+
+			<!-- Legend -->
+			<div id="legend">
+				<div class="legend-section">
+					<span class="legend-title">Genres:</span>
+					<div id="legend-genres"></div>
+				</div>
+				<div class="legend-section">
+					<span class="legend-title">Sales (within each genre):</span>
+					<span class="gradient-label">higher</span>
+					<div class="gradient-bar"></div>
+					<span class="gradient-label">lower</span>
+				</div>
+			</div>
+
+			<h1>Video Game Sales Treemap</h1>
+			<h2>Each rectangle is one video game. Size shows global sales.</h2>
+
+			<!-- Filters -->
+			<form class="form-inline">
+				<div class="form-group">
+					<label for="region-filter">Sales region:</label>
+					<select id="region-filter" class="form-control">
+						<option value="Global">Global</option>
+						<option value="NA">NA</option>
+						<option value="EU">EU</option>
+						<option value="JP">JP</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="year-filter">Year range:</label>
+					<select id="year-filter" class="form-control">
+						<option value="all">All Years</option>
+						<option value="1980-1990">1980-1990</option>
+						<option value="1990-2000">1990-2000</option>
+						<option value="2000-2010">2000-2010</option>
+						<option value="2010-2020">2010-2020</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="top-n-filter">Show top:</label>
+					<select id="top-n-filter" class="form-control">
+						<option value="10">10</option>
+						<option value="30" selected>30</option>
+						<option value="50">50</option>
+					</select>
+				</div>
+			</form>
+
+			<!-- Parent container for the visualization -->
+			<div id="chart-area"></div>
+		</div>
+
+		<!-- Tooltip shown on rectangle hover -->
+		<div id="tooltip" class="tooltip"></div>
+	</div>
+
+	<!-- Load JS libraries -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/d3.v6.min.js"></script>
+
+	<!-- Your implementation -->
+	<script src="js/main.js"></script>
+</body>
+</html>

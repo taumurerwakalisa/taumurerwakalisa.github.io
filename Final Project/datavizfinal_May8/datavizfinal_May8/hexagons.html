@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Video game genre categories</title>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/hexagons.css">
+
+       
+    </head>
+
+    <body>
+        <div class="container">
+            <!--Visualization title-->
+            
+                <h1>VIDEO GAME SALES BY GENRE AND REGION</h1>
+                <h3 class="subtitle">Presented by Asuna Dai and Umurerwa Kalisa Tania</h3>
+                <p>The aim of this visualization is to display video game sales using a treemap. 
+                 Video games are grouped by genre, and you can choose one or multiple genres in order to view the treemap.
+                 Using the buttons, you can select a genre or genres, and navigate to the treemap view.
+                </p>
+        </div>
+
+            <!-- Selection button -->
+        <div class="button-container">
+            <button id="view-treemap-btn" disabled>Select a Genre</button>
+            <button id="clear-selection-btn">Clear Selection</button>
+        </div>
+
+        <div class="hexagon-section">
+            <!--Create SVG drawing area for the hexagons--> 
+            <svg id="hexagon-container"></svg>
+
+            <!-- Add tooltip element -->
+            <div id="tooltip" class="tooltip"></div>
+        </div>
+
+
+
+        <script src="js/d3.v6.min.js"></script>
+        <script src="js/hexagons.js"></script>
+    </body>
+</html>
