@@ -14,9 +14,9 @@
         <div class="container">
             <!--Visualization title-->
             
-                <h1>VIDEO GAME SALES BY GENRE AND REGION</h1>
+                <h1 aria-label="Visualization of video game sales by genre and region" aria-describedby="visualization-description">VIDEO GAME SALES BY GENRE AND REGION</h1>
                 <h3 class="subtitle">Presented by Asuna Dai and Umurerwa Kalisa Tania</h3>
-                <p>The aim of this visualization is to display video game sales using a treemap. 
+                <p id="visualization-description">The aim of this visualization is to display video game sales using a treemap. 
                  Video games are grouped by genre, and you can choose one or multiple genres in order to view the treemap.
                  Using the buttons, you can select a genre or genres, and navigate to the treemap view.
                 </p>
@@ -28,7 +28,7 @@
             <button id="clear-selection-btn">Clear Selection</button>
         </div>
 
-        <div class="hexagon-section">
+        <div class="hexagon-section" role="region" aria-label="A display of genres for each game">
             <!--Create SVG drawing area for the hexagons--> 
             <svg id="hexagon-container"></svg>
 
