@@ -7,7 +7,13 @@ const svg = d3.select("#chart-area")
 	.append("svg")
 	.attr("width", width)
 	.attr("height", height)
-	.attr("viewBox", [0, 0, width, height]);
+	.attr("viewBox", [0, 0, width, height])
+	// Add aria attributes to svg
+	.attr("role", "region")
+	.attr("aria-label", "Interactive treemap of video game sales")
+	.attr("aria-describedby", "treemap-description");
+
+
 
 
 // Treemap layout
@@ -252,12 +258,27 @@ function updateVisualization() {
 		.attr("height", d => d.y1 - d.y0)
 		.attr("fill", gameColor)
 		.attr("stroke", "white")
-		.style("opacity", 0);
+		.style("opacity", 0)
+		.attr("tabindex", "0");  // Keyboard tabbing feature
+		
 
 	// MERGE: rebind handlers on every render so the closure captures the
 	// current `region` / `salesField` (otherwise old rects would show stale
 	// region labels in the tooltip).
 	const merged = rectsEnter.merge(rects)
+
+	// Update aria labels for the individual rectangles to display tooltips
+    .attr("aria-label", d => {
+        const salesValue = d.data[salesField].toFixed(2);
+        const regionName = region === "Global" ? "Global" : 
+                          region === "NA" ? "North America" :
+                          region === "EU" ? "Europe" :
+                          region === "JP" ? "Japan" : "Other regions";
+        return `${d.data.Name}. ${d.data.Genre} game released in ${d.data.Year} on ${d.data.Platform}. Published by ${d.data.Publisher}. ${regionName} sales: ${salesValue} million.`;
+    })
+
+
+
 		.on("mouseover", (event, d) => {
 			tooltip
 				.style("opacity", 1)
@@ -277,7 +298,49 @@ function updateVisualization() {
 		})
 		.on("mouseout", () => {
 			tooltip.style("opacity", 0);
-		});
+		})
+
+	// Add keyboard focus events
+    .on("focus", function(event, d) {
+        // Highlight the focused rectangle
+        d3.select(this)
+            .attr("stroke-width", 3)
+            .attr("stroke", "black");  // Black border
+        
+        // Show tooltip at a fixed position (centered at top)
+        tooltip
+            .style("opacity", 1)
+            .html(`
+                <strong>${d.data.Name}</strong><br>
+                Platform: ${d.data.Platform}<br>
+                Year: ${d.data.Year}<br>
+                Genre: ${d.data.Genre}<br>
+                Publisher: ${d.data.Publisher}<br>
+                ${region} Sales: ${d.data[salesField].toFixed(2)}M
+            `)
+            .style("left", "50%")
+            .style("top", "100px")
+            .style("transform", "translateX(-50%)");
+    })
+    .on("blur", function() {
+        // Remove highlight
+        d3.select(this)
+            .attr("stroke-width", 1)
+            .attr("stroke", "white");
+        
+        // Hide tooltip
+        tooltip.style("opacity", 0);
+    });
+
+
+
+
+
+
+
+
+
+
 
 	// Animate rectangles toward their new position, size, color, opacity.
 	merged.transition()
@@ -338,37 +401,7 @@ function drawLabels(games) {
 		.duration(200)
 		.style("opacity", 1);
 }
-/*
-// Append wrapped labels for the given set of leaves and fade them in.
-function drawLabels(games) {
-	const labels = svg.selectAll("text.game-label")
-		.data(games, d => d.data.Name + "|" + d.data.Platform)
-		.enter()
-		.append("text")
-		.attr("class", "game-label")
-		.attr("x", d => d.x0 + 4)
-		.attr("y", d => d.y0 + 14)
-		.attr("font-size", "13px")
-		.attr("fill", "white")
-		.style("opacity", 0)
-		.text(d => d.data.Name);
 
-	labels.each(function (d) {
-		const w = d.x1 - d.x0;
-		const h = d.y1 - d.y0;
-		// Cheap pre-filter: if the block is so small no label could possibly fit,
-		// skip the wrap work and just hide.
-		if (w < 28 || h < 18) {
-			d3.select(this).style("display", "none");
-			return;
-		}
-		wrapLabel(this, w, h);
-	});
-
-	labels.transition()
-		.duration(200)
-		.style("opacity", 1);
-}*/
 
 // Wrap the text content of an SVG <text> node into multiple <tspan> lines so
 // it stays inside a `blockWidth` x `blockHeight` rectangle.
