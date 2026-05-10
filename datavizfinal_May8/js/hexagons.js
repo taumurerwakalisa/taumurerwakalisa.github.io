@@ -15,23 +15,6 @@ const genreData = [
 ];
 
 
-/** COLORS 
- * 
-Shooter: #a6cee3
-Racing: #1f78b4
-Platform: #b2df8a
-Strategy: #33a02c
-Puzzle: #fb9a99
-Action: #e31a1c
-Simulation: #fdbf6f
-Adventure: #ff7f00
-Role-playing: #cab2d6
-Misc: #6a3d9a
-Sports: #bcbd22
-Fighting: #b15928
-
- */
-
 // Configuration
 const config = {
     minRadius: 95,
@@ -122,10 +105,13 @@ hexGroups.append("path")
     .attr("fill", d => d.color)
     .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))")
     .style("cursor", "pointer")
+    .attr("tabindex", "0") // Keyboard tabbing feature
+    .attr("role", "button") // Tells screenreaders that the hexagons are interactive buttons
+    // Add a descriptive aria label
+    .attr("aria-label", d => `${d.name} genre, ${d.count.toLocaleString()} games. Press Enter or Space to select this genre.`)
     .on("mouseover", handleMouseOver)
     .on("mousemove", handleMouseMove)
     .on("mouseout", handleMouseOut);
-
 
 
 // Add genre labels 
@@ -220,6 +206,7 @@ function handleHexagonClick(event, d) {
       .attr("stroke", "none")
       .attr("stroke-width", 0)
       .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))");
+
   } else {
     // Select
     selectedGenres.add(d.name);
