@@ -115,14 +115,22 @@ function loadData() {
 }
 
 
-// Build the static legend below the treemap: one swatch per genre and a
-// gradient bar that explains the within-genre saturation/lightness ramp.
+
+// Build the static legend below the treemap
 function buildLegend() {
 	const container = d3.select("#legend-genres");
 	Object.entries(GENRE_HUES).forEach(([genre, hue]) => {
-		const item = container.append("span").attr("class", "legend-item");
-		item.append("span").attr("class", "legend-swatch").style("background-color", hue);
-		item.append("span").attr("class", "legend-label").text(genre);
+		const item = container.append("span")
+			.attr("class", "legend-item")
+			.attr("data-genre", genre);  // data attribute for easy selection
+		
+		item.append("span")
+			.attr("class", "legend-swatch")
+			.style("background-color", hue);
+		
+		item.append("span")
+			.attr("class", "legend-label")
+			.text(genre);
 	});
 }
 
@@ -137,6 +145,33 @@ d3.select("#top-n-filter").on("change", updateVisualization);
 d3.select("#back-btn").on("click", () => {
 	window.location.href = "hexagons.html";
 });
+
+
+
+
+// Highlight selected genres in the legend
+function updateLegendHighlights() {
+	const allLegendItems = d3.selectAll(".legend-item");
+	
+	if (selectedGenres.size === 0) {
+		// No filter - show all genres as active
+		allLegendItems
+			.classed("active", true)
+			.classed("inactive", false);
+	} else {
+		// Filter active - highlight only selected genres
+		allLegendItems.each(function() {
+			const item = d3.select(this);
+			const genre = item.attr("data-genre");
+			const isActive = selectedGenres.has(genre);
+			
+			item
+				.classed("active", isActive)
+				.classed("inactive", !isActive);
+		});
+	}
+}
+
 
 
 // Update visualization
@@ -170,6 +205,10 @@ function updateVisualization() {
 	if (selectedGenres.size > 0) {
 		data = data.filter(d => selectedGenres.has(d.Genre));
 	}
+
+	// Update legend to show which genres are displayed
+	updateLegendHighlights();
+
 
 	// Cap the number of blocks: keep the top N by selected sales metric
 	data = data
@@ -337,12 +376,7 @@ function updateVisualization() {
 
 
 
-
-
-
-
-
-	// Animate rectangles toward their new position, size, color, opacity.
+// Animate rectangles toward their new position, size, color, opacity.
 	merged.transition()
 		.duration(TRANSITION_MS)
 		.attr("x", d => d.x0)
