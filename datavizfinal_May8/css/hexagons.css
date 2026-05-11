@@ -119,9 +119,6 @@ h3, .subtitle {
 .button-container {
     display: flex;
     justify-content: center;
-    /*gap: 20px;
-    margin-top: 5px;
-    margin-bottom: 40px;*/
 }
 
 #view-treemap-btn {
@@ -169,4 +166,37 @@ h3, .subtitle {
 #clear-selection-btn:hover {
     border-color: white;
     background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+/*------CSS FOR THE KEYBOARD NAVIGATION-------*/
+/* Remove default focus outline (the white rectangle around the hexagons)*/
+.hexagon:focus {
+    outline: none;  /* Remove white rectangle */
+}
+
+/* Add custom focus styling that's less intrusive */
+.hexagon:focus-visible {
+    outline: 3px solid #4A90E2;
+    outline-offset: 8px;
+    border-radius: 10px;
+}
+
+/* Only show focus outline for keyboard users, not mouse clicks */
+.hexagon:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Button focus styles */
+#view-treemap-btn:focus,
+#clear-selection-btn:focus {
+    outline: 3px solid #4A90E2;
+    outline-offset: 3px;
+}
+
+/* Remove outline on mouse click, keep for keyboard */
+#view-treemap-btn:focus:not(:focus-visible),
+#clear-selection-btn:focus:not(:focus-visible) {
+    outline: none;
 }
