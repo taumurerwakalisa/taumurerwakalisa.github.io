@@ -256,13 +256,7 @@ h3, .subtitle {
 	display: block;
 }
 
-/* Game labels inside the treemap */
-/*text.game-label {
-	font-family: 'Rajdhani', sans-serif;
-	font-weight: 600;
-	pointer-events: none;
-	font-size: 1rem;
-}*/
+
 
 /* Game labels inside the treemap */
 text.game-label {
@@ -298,4 +292,43 @@ text.game-label {
 	font-weight: 700;
 	display: block;
 	margin-bottom: 4px;
+}
+
+
+
+/* Styles for updating the legend based on the genres selected */
+/* Legend item states */
+.legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	transition: all 0.3s ease;
+}
+
+/* Active genre (currently displayed) */
+.legend-item.active {
+	opacity: 1;
+}
+
+.legend-item.active .legend-swatch {
+	border: 2px solid; 
+}
+
+.legend-item.active .legend-label {
+	font-weight: 700;
+	color: #fff;
+}
+
+/* Inactive genre (not displayed) */
+.legend-item.inactive {
+	opacity: 0.3;
+}
+
+.legend-item.inactive .legend-swatch {
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	filter: grayscale(60%);
+}
+
+.legend-item.inactive .legend-label {
+	color: rgba(255, 255, 255, 0.4);
 }
