@@ -58,8 +58,8 @@ function createHexagonPath(radius) {
 
 // Pack hexagons using force simulation to avoid overlap
 const simulation = d3.forceSimulation(genreData)
-    .force("x", d3.forceX(500).strength(0.9)) /*Increased from 0.05*/
-    .force("y", d3.forceY(400).strength(0.9)) /*Inreased from 0.05*/
+    .force("x", d3.forceX(500).strength(0.9)) 
+    .force("y", d3.forceY(400).strength(0.9)) 
     .force("collide", d3.forceCollide(d => d.radius + config.padding))
     .stop();
 
@@ -107,11 +107,17 @@ hexGroups.append("path")
     .style("cursor", "pointer")
     .attr("tabindex", "0") // Keyboard tabbing feature
     .attr("role", "button") // Tells screenreaders that the hexagons are interactive buttons
+    .attr("aria-pressed", "false")  // track selection state
     // Add a descriptive aria label
     .attr("aria-label", d => `${d.name} genre, ${d.count.toLocaleString()} games. Press Enter or Space to select this genre.`)
     .on("mouseover", handleMouseOver)
     .on("mousemove", handleMouseMove)
-    .on("mouseout", handleMouseOut);
+    .on("mouseout", handleMouseOut)
+    .on("click", handleHexagonClick)
+    // functions to aid keyboard navigation
+    .on("keydown", handleKeyDown)      // keyboard handler
+    .on("focus", handleFocus)          // focus handler
+    .on("blur", handleBlur);           // blur handler
 
 
 // Add genre labels 
@@ -182,43 +188,84 @@ hexGroups
     .style("opacity", 1);
 
 
+//---------------OTHER KEYBOARD HANDLERS--------------------------
+// Keyboard selection handler
+function handleKeyDown(event, d) {
+    // Enter or Space to select/deselect
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault(); // Prevent page scroll on Space
+        
+        // Get the parent group and trigger click
+        const group = d3.select(this.parentNode);
+        handleHexagonClick.call(group.node(), event, d);
+    }
+}
 
+// Focus handler: add subtle glow for keyboard navigation
+function handleFocus(event, d) {
+    const hexagon = d3.select(this);
+    
+    // Only add focus effect if not already selected
+    if (!selectedGenres.has(d.name)) {
+        hexagon
+            .style("filter", `drop-shadow(0 0 15px ${d.color})`);
+    }
+}
+
+// Blur handler - remove focus effect
+function handleBlur(event, d) {
+    const hexagon = d3.select(this);
+    
+    // Only remove if not selected
+    if (!selectedGenres.has(d.name)) {
+        hexagon
+            .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))");
+    }
+}
+//-------------------END OF KEYBOARD HANDLERS---------------------
 
 //---------------BUTTON SELECTION PART----------------------------
 // Add at the top after genreData
 let selectedGenres = new Set();
 
+/*
 // After creating hexGroups, add selection functionality
 hexGroups
   .style("cursor", "pointer")
   .on("click", handleHexagonClick);
+*/
 
-// Selection handler
+
+
+// Fix the selection handler function
+// Selection handler 
 function handleHexagonClick(event, d) {
-  event.stopPropagation();
-  
-  if (selectedGenres.has(d.name)) {
-    // Deselect
-    selectedGenres.delete(d.name);
-    d3.select(this).select("path")
-      .transition()
-      .duration(300)
-      .attr("stroke", "none")
-      .attr("stroke-width", 0)
-      .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))");
-
-  } else {
-    // Select
-    selectedGenres.add(d.name);
-    d3.select(this).select("path")
-      .transition()
-      .duration(300)
-      .attr("stroke", "#FFD700")
-      .attr("stroke-width", 5)
-      .style("filter", `drop-shadow(0 0 20px ${d.color})`);
-  }
-  
-  updateViewButton();
+    event.stopPropagation();
+    
+    // Fixed to: Check if 'this' is the path or the group
+    const path = d3.select(this.tagName === 'path' ? this : this.querySelector('path'));
+    
+    if (selectedGenres.has(d.name)) {
+        // Deselect
+        selectedGenres.delete(d.name);
+        path
+            .attr("stroke", "none")
+            .attr("stroke-width", 0)
+            .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))")
+            .attr("aria-pressed", "false")
+            .attr("aria-label", `${d.name} genre, ${d.count.toLocaleString()} games. Press Enter or Space to select.`);
+    } else {
+        // Select
+        selectedGenres.add(d.name);
+        path
+            .attr("stroke", "#FFD700")
+            .attr("stroke-width", 5)
+            .style("filter", `drop-shadow(0 0 20px ${d.color})`)
+            .attr("aria-pressed", "true")
+            .attr("aria-label", `${d.name} genre, ${d.count.toLocaleString()} games. Selected. Press Enter or Space to deselect.`);
+    }
+    
+    updateViewButton();
 }
 
 // Update button state
@@ -255,17 +302,18 @@ updateViewButton();
 
 
 
-// Add to main.js
+
+// Add to main.js: Clear selection 
 d3.select("#clear-selection-btn").on("click", function() {
     selectedGenres.clear();
     
     // Remove all selection styles
     hexGroups.selectAll("path")
-      .transition()
-      .duration(300)
-      .attr("stroke", "none")
-      .attr("stroke-width", 0)
-      .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))");
+        .attr("stroke", "none")
+        .attr("stroke-width", 0)
+        .style("filter", "drop-shadow(0 0 8px rgba(0,0,0,0.3))")
+        .attr("aria-pressed", "false")
+        .attr("aria-label", d => `${d.name} genre, ${d.count.toLocaleString()} games. Press Enter or Space to select.`);
     
     updateViewButton();
 });
