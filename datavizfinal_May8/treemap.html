@@ -18,6 +18,7 @@
 
 			<h1>VIDEO GAME SALES TREEMAP</h1>
 			<h3 class="subtitle">Each rectangle is one video game. Size shows sales.</h3>
+			<p class="data-source-link"><a href="data.html">View the source dataset &rarr;</a></p>
 
 			<!-- Filters -->
 			<form class="form-inline" aria-label="Filter Treemap data">
@@ -57,12 +58,6 @@
 					<span class="legend-title">Genres:</span>
 					<div id="legend-genres"></div>
 				</div>
-				<div class="legend-section">
-					<span class="legend-title">Year released (within each genre):</span>
-					<span class="gradient-label" id="gradient-label-left">older</span>
-					<div class="gradient-bar"></div>
-					<span class="gradient-label" id="gradient-label-right">newer</span>
-				</div>
 			</div>
 
 			<!-- Parent container for the visualization -->
@@ -75,7 +70,12 @@
 				of the world including Europe, Japan, North America, other parts of the world
 				and globally. The size of the area occupied by a game corresponds to how big or
 				small a sale was. 
+
+				This visualization was made for CSC362 with substantial help from Claude AI in generating 
+				most of its components. 
+		
 			</div>
+			
 
 			<!-- Implement a live region for filter updates -->
 			<div id="status-message" class="sr-only" aria-live="polite" aria-atomic="true"></div>
