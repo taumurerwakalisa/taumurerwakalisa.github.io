@@ -108,6 +108,22 @@ h3, .subtitle {
         }
 
 
+/* Small "View source dataset" link below the description */
+.data-source-link {
+    text-align: center !important;
+    margin: 5px 45px 0 45px !important;
+    font-size: 1rem !important;
+    animation: fadeInDown 0.8s ease-out;
+}
+.data-source-link a {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+.data-source-link a:hover { color: #fff; }
+
 /*CSS FOR THE SELECTION BUTTONS*/
 .instruction {
     text-align: center;
