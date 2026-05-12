@@ -43,6 +43,23 @@ body::before {
 	66% { transform: translate(-2%, 2%) rotate(-1deg); }
 }
 
+/* Small "View source dataset" link under the subtitle */
+.data-source-link {
+	text-align: center;
+	margin: 8px 0 0 0;
+	font-size: 1rem;
+	position: relative;
+	z-index: 1;
+}
+.data-source-link a {
+	color: var(--text-secondary);
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	letter-spacing: 0.05em;
+	transition: color 0.2s;
+}
+.data-source-link a:hover { color: #fff; }
+
 .container {
 	position: relative;
 	z-index: 1;
