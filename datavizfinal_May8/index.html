@@ -1,94 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Video Game Sales Treemap</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Video game genre categories</title>
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/hexagons.css">
 
-	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/treemap.css">
-</head>
+       
+    </head>
 
-<body>
-	<div class="container">
+    <body>
+        <div class="container">
+            <!--Visualization title-->
+            
+                <h1 aria-label="Visualization of video game sales by genre and region" aria-describedby="visualization-description">VIDEO GAME SALES BY GENRE AND REGION</h1>
+                <h3 class="subtitle">Presented by Asuna Dai and Umurerwa Kalisa Tania</h3>
+                <p id="visualization-description">The aim of this visualization is to represent video game sales 
+                    with an interactive treemap.  Video games are grouped by genre, allowing users to compare sales across
+                    different categories. This page is the default view where each hexagon represents one genre. 
+                    You may select a genre(s), and use the 'View Genre(s)' button to navigate to 
+                    the treemap view, to examine the corresponding sales performance.
+                    This visualization was made for CSC362 with substantial help from Claude AI in generating 
+				    most of its components.
+                </p>
 
-		<!-- Treemap view -->
-		<div id="treemap-view">
-			<button type="button" id="back-btn" aria-label="Go back to genre view">&larr; Go back</button>
+                <p class="data-source-link">
+                    <a href="data.html">View the source dataset &rarr;</a>
+                </p>
+        </div>
 
-			<h1>VIDEO GAME SALES TREEMAP</h1>
-			<h3 class="subtitle">Each rectangle is one video game. Size shows sales.</h3>
-			<p class="data-source-link"><a href="data.html">View the source dataset &rarr;</a></p>
+            <!-- Selection button -->
+        <div class="button-container">
+            <button id="view-treemap-btn" disabled>Select a Genre</button>
+            <button id="clear-selection-btn">Clear Selection</button>
+        </div>
 
-			<!-- Filters -->
-			<form class="form-inline" aria-label="Filter Treemap data">
-				<div class="form-group">
-					<label for="region-filter">Sales region:</label>
-					<select id="region-filter" class="form-control" role="region" aria-label="Select a sales region to display">
-						<option value="Global">Global</option>
-						<option value="NA">North America</option>
-						<option value="EU">Europe</option>
-						<option value="JP">Japan</option>
-						<option value="Other">Other</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="year-filter">Year range:</label>
-					<select id="year-filter" class="form-control" role="region" aria-label="Select year range to filter">
-						<option value="all">All Years</option>
-						<option value="1980-1990">1980-1990</option>
-						<option value="1990-2000">1990-2000</option>
-						<option value="2000-2010">2000-2010</option>
-						<option value="2010-2020">2010-2020</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="top-n-filter">Show top:</label>
-					<select id="top-n-filter" class="form-control" role="region" aria-label="Select Number of top games to display">
-						<option value="10">10</option>
-						<option value="30" selected>30</option>
-						<option value="50">50</option>
-					</select>
-				</div>
-			</form>
+        <div class="hexagon-section" role="region" aria-label="A display of genres for each game">
+            <!--Create SVG drawing area for the hexagons--> 
+            <svg id="hexagon-container"></svg>
 
-			<!-- Legend -->
-			<div id="legend" aria-label="Treemap legend">
-				<div class="legend-section">
-					<span class="legend-title">Genres:</span>
-					<div id="legend-genres"></div>
-				</div>
-			</div>
+            <!-- Add tooltip element -->
+            <div id="tooltip" class="tooltip"></div>
+        </div>
 
-			<!-- Parent container for the visualization -->
-     		<div id="chart-area"></div>    
-		
 
-			<!--Hidden description of treemap for screen readers-->
-			<div id="treemap-description"  class="sr-only">
-				This treemap visualizes how many sales a video game made in various regions
-				of the world including Europe, Japan, North America, other parts of the world
-				and globally. The size of the area occupied by a game corresponds to how big or
-				small a sale was. 
 
-				This visualization was made for CSC362 with substantial help from Claude AI in generating 
-				most of its components. 
-		
-			</div>
-			
-
-			<!-- Implement a live region for filter updates -->
-			<div id="status-message" class="sr-only" aria-live="polite" aria-atomic="true"></div>
-		</div>
-
-		<!-- Tooltip shown on rectangle hover -->
-		<div id="tooltip" class="tooltip" role="tooltip"></div>
-	</div>
-
-	<!-- Load JS libraries -->
-	<script src="js/d3.v6.min.js"></script>
-
-	<!-- Treemap implementation -->
-	<script src="treemap.js"></script>
-</body>
+        <script src="js/d3.v6.min.js"></script>
+        <script src="js/hexagons.js"></script>
+    </body>
 </html>
