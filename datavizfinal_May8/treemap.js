@@ -228,42 +228,11 @@ function updateVisualization() {
 	// Get only the game nodes
 	const games = root.leaves();
 
-	// older games render paler, newer games
-	// render at the genre's full saturation. 
-	const [minYear, maxYear] = d3.extent(data, d => d.Year);
-	const yearRange = (maxYear - minYear) || 1;
 
-	// Build the older end of the per-genre color ramp.
-	function lightEndFor(baseHsl) {
-		return d3.hsl(
-			baseHsl.h,
-			baseHsl.s * 0.25,
-			Math.min(0.90, baseHsl.l + 0.28)
-		);
-	}
-
-	function gameColor(d) {
-		const baseHsl = d3.hsl(GENRE_HUES[d.data.Genre]);
-		// t = 0 for the oldest displayed year, 1 for the newest. If every
-		// game is from the same year, fall back to the genre's full color.
-		const t = (maxYear === minYear) ? 1 : (d.data.Year - minYear) / yearRange;
-		const lightEnd = lightEndFor(baseHsl);
-		const darkEnd  = d3.hsl(baseHsl.h, baseHsl.s, baseHsl.l);
-		return d3.interpolateHsl(lightEnd, darkEnd)(t);
-	}
-
-	// Update the legend gradient bar to illustrate the year ramp
-	if (data.length > 0) {
-		const topGenreHsl = d3.hsl(GENRE_HUES[data[0].Genre]);
-		const barLight = lightEndFor(topGenreHsl);
-		const barDark  = d3.hsl(topGenreHsl.h, topGenreHsl.s, topGenreHsl.l);
-		d3.select(".gradient-bar")
-			.style("background", `linear-gradient(to right, ${barLight}, ${barDark})`);
-
-		// Show the actual year range on either side of the bar.
-		d3.select("#gradient-label-left").text(minYear);
-		d3.select("#gradient-label-right").text(maxYear);
-	}
+	// Color by genre 
+    function gameColor(d) {
+       return GENRE_HUES[d.data.Genre];
+    }
 
 	// Hide tooltip in case it was open from a previous block
 	tooltip.style("opacity", 0);
