@@ -14,16 +14,17 @@
 
 		<!-- Treemap view -->
 		<div id="treemap-view">
-			<button type="button" id="back-btn">&larr; Go back</button>
+			<button type="button" id="back-btn" aria-label="Go back to genre view">&larr; Go back</button>
 
 			<h1>VIDEO GAME SALES TREEMAP</h1>
 			<h3 class="subtitle">Each rectangle is one video game. Size shows sales.</h3>
+			<p class="data-source-link"><a href="data.html">View the source dataset &rarr;</a></p>
 
 			<!-- Filters -->
-			<form class="form-inline">
+			<form class="form-inline" aria-label="Filter Treemap data">
 				<div class="form-group">
 					<label for="region-filter">Sales region:</label>
-					<select id="region-filter" class="form-control">
+					<select id="region-filter" class="form-control" role="region" aria-label="Select a sales region to display">
 						<option value="Global">Global</option>
 						<option value="NA">North America</option>
 						<option value="EU">Europe</option>
@@ -33,7 +34,7 @@
 				</div>
 				<div class="form-group">
 					<label for="year-filter">Year range:</label>
-					<select id="year-filter" class="form-control">
+					<select id="year-filter" class="form-control" role="region" aria-label="Select year range to filter">
 						<option value="all">All Years</option>
 						<option value="1980-1990">1980-1990</option>
 						<option value="1990-2000">1990-2000</option>
@@ -43,7 +44,7 @@
 				</div>
 				<div class="form-group">
 					<label for="top-n-filter">Show top:</label>
-					<select id="top-n-filter" class="form-control">
+					<select id="top-n-filter" class="form-control" role="region" aria-label="Select Number of top games to display">
 						<option value="10">10</option>
 						<option value="30" selected>30</option>
 						<option value="50">50</option>
@@ -52,25 +53,36 @@
 			</form>
 
 			<!-- Legend -->
-			<div id="legend">
+			<div id="legend" aria-label="Treemap legend">
 				<div class="legend-section">
 					<span class="legend-title">Genres:</span>
 					<div id="legend-genres"></div>
 				</div>
-				<div class="legend-section">
-					<span class="legend-title">Year released (within each genre):</span>
-					<span class="gradient-label" id="gradient-label-left">older</span>
-					<div class="gradient-bar"></div>
-					<span class="gradient-label" id="gradient-label-right">newer</span>
-				</div>
 			</div>
 
 			<!-- Parent container for the visualization -->
-			<div id="chart-area"></div>
+     		<div id="chart-area"></div>    
+		
+
+			<!--Hidden description of treemap for screen readers-->
+			<div id="treemap-description"  class="sr-only">
+				This treemap visualizes how many sales a video game made in various regions
+				of the world including Europe, Japan, North America, other parts of the world
+				and globally. The size of the area occupied by a game corresponds to how big or
+				small a sale was. 
+
+				This visualization was made for CSC362 with substantial help from Claude AI in generating 
+				most of its components. 
+		
+			</div>
+			
+
+			<!-- Implement a live region for filter updates -->
+			<div id="status-message" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 		</div>
 
 		<!-- Tooltip shown on rectangle hover -->
-		<div id="tooltip" class="tooltip"></div>
+		<div id="tooltip" class="tooltip" role="tooltip"></div>
 	</div>
 
 	<!-- Load JS libraries -->
