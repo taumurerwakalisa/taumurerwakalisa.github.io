@@ -1,0 +1,213 @@
+/*
+color palette:
+Light blue #90C7E3 — backgrounds, highlights
+Dark blue #1B4F72 — headers, active states
+Teal #2E86AB — accent, chart color 1
+Soft orange #E8A838 — chart color 2 (contrast for categories)
+Light gray #F4F6F8 — page background
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color:#F4F6F8;
+   /* font-family: 'Segoe UI', sans-serif;*/
+   /* Change the font later */
+    color: #1B4F72;
+}
+
+
+/*Hero/Header*/
+header {
+    background-color:#1B4F72;
+    color: white;
+    padding: 48px 40px;
+}
+
+header, h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+
+/* Subtopic nav bar */
+#subtopic-nav{
+    display: flex; /*so the buttons are side by side*/
+    gap: 30px; /*Creates a gap between the buttons in this nav bar*/
+    padding: 20px 40px;
+    background-color: white;
+    border-bottom: 1px solid #ddd; 
+}
+
+.subtopic-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #1B4F72;
+    padding-bottom:6px;
+    border-bottom: 2px solid transparent; /* width, style, color*/
+    transition: border-color 0.2s ease; /* i.e. the transition is applied to the 'border-color' property*/
+}
+
+.subtopic-btn:hover{
+    border-bottom: 2px solid #90C7E3;
+}
+
+.subtopic-btn.active {
+    border-bottom: 2px solid #1B4F72;
+    font-weight: 500;
+}
+
+
+/* Town buttons */
+#town-options-nav{
+    display: flex;
+    gap: 15px;
+    padding: 16px 40px;
+    background-color: #F4F6F8;
+}
+
+.town-btn{
+    background-color: white;
+    border: 1px solid #90C7E3;
+    color: #1B4F72;
+    font-size: 0.8rem;
+    padding: 6px 16px; /*top&bottom padding (6px) and  left&right padding (16px)*/
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.town-btn:hover{
+    background-color: #90C7E3;
+    color: white;
+}
+
+.town-btn.active{
+    background-color: #1B4F72;
+    color: white;
+    border-color: #1B4F72; 
+}
+
+
+/* Tooltip */
+.tooltip {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: #1B4F72;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+
+/* Styling the viz containers */
+#viz-container {
+    background-color: white;
+    border: 0.5px solid #ddd;
+    border-radius: 12px;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    margin: 4px 40px 40px 40px;
+    gap: 48px;
+}
+
+.viz-section{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.section-title{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1B4F72;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+}
+
+
+
+
+/* Styling the map address search bar */
+#address-search {
+    display: flex;
+    gap: 8px; 
+    padding: 16px 0;
+}
+
+#address-input {
+    flex: 1;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid #90C7E3;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #1B4F72;
+}
+
+#address-input:focus {
+    outline: none; 
+    border-color: #1B4F72;
+}
+
+#address-submit {
+    background-color: #1B4F72;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 20px; 
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease; 
+}
+
+
+#address-submit:hover {
+    background-color: #2E86AB;
+}
+
+
+/* Styling the radius filter buttons */
+#radius-filter {
+    display: flex;
+    gap: 10px;
+    padding: 16px 0; 
+}
+
+.radius-btn {
+    background-color: white;
+    border: 1px solid #90C7E3;
+    color: #1B4F72;
+    font-size: 0.85rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer; 
+    transition: background-color 0.2s ease;
+}
+
+.radius-btn:hover {
+    background-color: #90C7E3;
+    color: white; 
+}
+
+.radius-btn.active {
+    background-color: #1B4F72;
+    color: white;
+    border-color: #1B4F72;
+}
+
+/* Style the map to be more rounded */
+#facilityMap-container {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}

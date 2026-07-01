@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Healthcare Visualizations</title>
+        <link rel="stylesheet" href="css/styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    </head>
+
+    <body>
+        <!--Header title / Hero section-->
+        <header>
+            <h1>North Meck Health Dashboard</h1>
+        </header>
+        
+        <!--This part will have buttons to switch between the towns
+        It could also include some title related to the healthcare data-->
+        <nav id="subtopic-nav">
+            <!--The 'active' class will be used to describe the button for which the data is currently being displayed i.e. the selected one-->
+            <button class="subtopic-btn active"  data-subtopic="insurance">Health Insurance</button>
+            <button class="subtopic-btn"  data-subtopic="accessibility">Access to Care</button>
+            <button class="subtopic-btn"  data-subtopic="mental-health">Mental Health</button>
+            <button class="subtopic-btn"  data-subtopic="health-outcomes">Health Outcomes</button>
+        </nav>
+        
+        <nav id="town-options-nav">
+            <button class="town-btn active"  data-town="all">All towns</button>
+            <button class="town-btn"  data-town="cornelius">Cornelius</button>
+            <button class="town-btn"  data-town="davidson">Davidson</button>
+            <button class="town-btn"  data-town="huntersville">Huntersville</button>
+        </nav>
+
+        
+        <div id="viz-container"> <!--Start of overall viz container-->
+            <!--SVG chart drawing area-->
+
+
+            <div id="insurance-content" class="subtopic-content">
+                <div class="viz-section">
+                <h2 class="section-title"></h2> <!--Health Insurance Type heatmap-->
+                <div id="townInsHeatmapViz-container"></div>
+                 <!--<div>
+                    <p> Observations to consider: </p>
+                    <ul>
+                        <li>It looks like most people rely on their employers to afford health insurance. </li>
+                        <li>The second most used type of insurance is Medicare (given it is mostly targeting older populations). 
+                            <strong>We can shed light on the age populatiion distribution of the towns.</strong>
+                        </li>
+                        <li>Then, the third most used type of insurance is direct purchase. We can try and look more into that as well</li>
+                    </ul>
+                 </div> -->
+                </div>
+
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2> <!--Overall Insurance Coverage Rates Dot Chart-->
+                    <div id="townInsRateViz-container"></div>
+                    <!--<div>
+                        <p> Points to note:</p>
+                        <ul>
+                            <li>Compare to the rest of Charlotte, Mecklenburg, or NC as a whole (the average perhaps).</li>
+                        </ul>
+                    </div>-->
+                </div>
+
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2> <!--Income and Insurance Coverage Rates-->
+                    <div id="incInsViz-container"></div>
+                </div>
+
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2>
+                    <div id="ageUninsViz-container"></div>
+                    <!--<p>The line chart answers the qiestion: "Within each age group, what %age are uninsured?"</p>
+                    <p> For the 'All Towns' bar chart, think about comapring it with the 
+                        age population distribution i.e. in this town, what %age is 65+ and so on.
+                    </p>
+                    <p> The Age insurance coverage by town will show how the uninsured population 
+                is distributed by age, amongst the total uninsured population in that town. 
+                So, the question its answering is: Among the uninsured total population, what does 
+                uninsurance look like when we group people by their ages?</p> -->
+                </div>
+
+                
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2>
+                    <div id="ageInsViz-container"></div>
+                </div>
+
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2> <!--Insurance Coverage by Employment Status-->
+                    <div id="empInsViz-container"></div>
+                </div>
+
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2> <!--Trend in Insurance Coverage Rates-->
+                    <div id="trendInsViz-container"></div>
+                </div>
+
+            </div> <!--END OF INSURANCE CONTENT DIV-->
+
+
+            <div id="mental-health-content" class="subtopic-content" style="display: none;">
+                <!--Leaflet Map practice run container-->
+                <div class="viz-section">
+                    <h2 class="section-title">Healthcare Facility Locations (Mental Health and substance use)</h2>
+                    <!--Input button for search address function-->
+                    <div id="address-search">
+                        <input type="text" id="address-input" placeholder="Enter your address" />
+                        <button id="address-submit">Search</button>
+                    </div>
+                    <!--Actual svg area-->
+                    <div id="facilityMap-container" style="height: 500px;"></div>
+                </div> 
+
+
+                <!--The map radius filter buttons-->
+                <div id="radius-filter">
+                    <button class="radius-btn active" data-radius="all">All</button>
+                    <button class="radius-btn" data-radius="5">5 miles</button>
+                    <button class="radius-btn" data-radius="15">15 miles</button>
+                    <button class="radius-btn" data-radius="25">25 miles</button>
+                </div>
+
+
+                <!--The depression prevalence visualizations-->
+                <div class="viz-section">
+                    <h2 class="section-title"></h2>
+                    <div id="depressionViz-container"></div>
+                   <!-- <p>Perhaps what this shows is that depression rates are definitely growing, even 
+                        though at a slow rate. (Analyze this more)
+                    </p> -->
+                </div>
+
+                <div class="viz-section">
+                    <h2 class="section-title"></h2>
+                    <div id="mentalHealthDistressViz-container"></div>
+                </div>
+
+
+            </div> <!--END OF MENTAL HEALTH CONTENT DIV-->
+            
+
+
+            <div id="health-outcomes-content" class="subtopic-content" style="display: none;">
+                <div class="viz-section">
+                    <h2 class="section-title"></h2>
+                    <div id="diabetesViz-container"></div>
+                </div>
+
+            </div> <!--END OF HEALTH OUTCOMES CONTENT DIV-->
+
+            
+
+        </div> <!--End of overall viz container-->
+
+
+    </body>
+
+
+    <script src="js/d3.v6.min.js"></script> <!--d3 script-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!--Leaflet script-->
+    <script src="js/townInsTypeHeatmap.js"></script>
+    <script src="js/insCoverageTypeBar.js"></script>
+    <script src="js/incomeIns.js"></script>
+    <script src="js/ageInsCoverageBar.js"></script>
+    <script src="js/employmentInsurance.js"></script>
+    <script src="js/trendIns.js"></script>
+    <script src="js/townInsRateDotChart.js"></script>
+    <script src="js/facilityMap.js"></script>
+    <script src="js/diabetes.js"></script>
+    <script src="js/depressionDumbbell.js"></script>
+    <script src="js/mentalHealthDistress.js"></script>
+    <script src="js/townAgeUninsBar.js"></script>
+    <script src="js/AgeUninsTrend.js"></script>
+    <script src="js/depressionBarByYear.js"></script>
+    <script src="js/main.js"></script>
+</html>
