@@ -3,9 +3,18 @@
  */
 
 // Create the map, centered roughly on the North Meck are
-const map = L.map("facilityMap-container").setView([35.48, -80.85], 11); //11 is the zoom level. 
+var map; // = L.map("facilityMap-container").setView([35.48, -80.85], 11); //11 is the zoom level.  // Use var so the variable can be accessed in main.js
 
 //Leaflet takes the id string directly; unlike d3 that uses a css selector i.e. d3.select("#facilityMap-container")
+
+
+
+function initMap() {
+
+if (map) return;
+
+map = L.map("facilityMap-container").setView([35.48, -80.85], 11); //11 is the zoom level
+
 
 // Add the OpenStreetMap tile layer
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -238,3 +247,5 @@ d3.csv("data/mh_su_facilities.csv").then(function(facilities) {
 
 }); // closes d3.csv(...).then()
 
+
+} // Closes the initMap() function
