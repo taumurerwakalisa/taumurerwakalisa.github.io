@@ -61,6 +61,7 @@ d3.csv('data/nmeck_all_health.csv')
 
     //Insurance and Income side by side bar chart
     let incInsData, incomeInsChart;
+    let townUninsByIncChart;
 
     //Insurance and Age horizontal stacked bar chart
     let ageInsData, ageInsChart;
@@ -128,6 +129,7 @@ d3.csv('data/nmeck_all_health.csv')
             d3.select("#ageUninsViz-container").html("");
             d3.select("#depressionViz-container").html("");
             d3.select("#ageInsViz-container").html("");
+            //d3.select("#incInsViz-container").html("");
 
 
             if (activeTown == "All") {
@@ -137,6 +139,9 @@ d3.csv('data/nmeck_all_health.csv')
                 let townInsRateData = data.filter(d => d.year == activeYear);
                 townInsRateDotChart = new TownInsRate({parentElement: "#townInsRateViz-container"}, townInsRateData);
 
+                //let townUninsByIncData = data.filter(d => d.year == activeYear);
+                //townUninsByIncChart = new TownUninsByIncome({parentElement: "#incInsViz-container"}, townUninsByIncData);
+
                 let townUninsByAgeData = data.filter(d => d.year == activeYear); 
                 townUninsByAgeChart = new TownUninsByAgeChart({parentElement:"#ageUninsViz-container"}, townUninsByAgeData);
 
@@ -144,7 +149,6 @@ d3.csv('data/nmeck_all_health.csv')
                 depressionDumbbellChart = new DepressionDumbbell({parentElement: "#depressionViz-container"}, placesData || []);
 
                 // Placeholder for charts not yet fully built for All Towns view: 
-                d3.select("#incInsViz-container").html(`<p style="padding:24px;color:#5F6B7A;font-size:0.9rem;font-style:italic;">Town comparison chart updating soon for Insurance coverage by income bracket, 2024.</p>`);
                 d3.select("#empInsViz-container").html(`<p style="padding:24px;color:#5F6B7A;font-size:0.9rem;font-style:italic;">Town comparison chart updating soon for insurance coverage by employement status, 2024.</p>`);
 
             }
@@ -154,6 +158,9 @@ d3.csv('data/nmeck_all_health.csv')
 
                 let ageUninsTrendData = data.filter(d => d.Town == activeTown);
                 ageUninsTrendChart = new AgeUninsTrendChart({parentElement: '#ageUninsViz-container'}, ageUninsTrendData);
+
+                //incInsData = data.filter(d => d.Town == activeTown && d.year == activeYear);
+                //incomeInsChart = new IncInsChart({parentElement: "#incInsViz-container"}, incInsData);
 
                 // Depression Prevalence Bar charts (For individual towns)
                 depressionBarByYearData = placesData ? placesData.filter(d => d.Town === activeTown) : [];
@@ -200,12 +207,14 @@ document.querySelectorAll(".subtopic-btn").forEach(function(btn) {
         if(targetSection) {
             targetSection.style.display = "block";
         }
+
+        if (selectedSubtopic === "mental-health") {
+            setTimeout(function() {
+                initMap();
+            }, 100);
+        }
     });
 });
-
-
-
-
 
 
 
